@@ -13,9 +13,10 @@ const main = async () => {
 
   app.use('/', router)
 
-  app.use((req, res) => {
-    res.status(404).send({
-      url: `Status 404 - ${req.originalUrl} not found.`
+  app.use((err, req, res, next) => {
+    res.status(err.status).json({
+      status: err.status,
+      message: err.message
     })
   })
 
