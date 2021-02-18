@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node server.js",
     "startDev": "nodemon --inspect -r dotenv/config server.js",
-    "seed": "node seed.js"
+    "seed": "node seed.cjs"
   },
   "keywords": [
     "REST",
@@ -19,6 +19,7 @@
     "express": "^4.17.1",
     "helmet": "^4.4.1",
     "http-errors": "^1.8.0",
+    "jsonwebtoken": "^8.5.1",
     "mongo-seeding": "^3.5.0",
     "mongoose": "^5.11.16"
   },

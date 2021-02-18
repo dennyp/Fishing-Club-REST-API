@@ -23,6 +23,6 @@ seeder
   .then(() => {
     console.log('Success')
   })
-  .catch(err => {
+  .catch((err) => {
     console.log('Error', err)
   })
