@@ -1,6 +1,4 @@
-'use strict'
-
-const { Schema, model } = require('mongoose')
+import { Schema, model } from 'mongoose'
 
 const catchSchema = Schema({
   username: { type: String, required: true, maxlength: 20 },
@@ -12,9 +10,7 @@ const catchSchema = Schema({
   weight: { type: Number },
   length: { type: Number },
   imageUrl: { type: String },
-  timestamp: { type: Date, reqired: true, default: Date.now }
+  timestamp: { type: Date, required: true, default: Date.now }
 })
 
-const Catch = model('catch', catchSchema)
-
-module.exports = Catch
+export const Catch = model('catch', catchSchema)
