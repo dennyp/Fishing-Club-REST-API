@@ -21,7 +21,8 @@
     "http-errors": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
     "mongo-seeding": "^3.5.0",
-    "mongoose": "^5.11.16"
+    "mongoose": "^5.11.16",
+    "validator": "^13.5.2"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",
