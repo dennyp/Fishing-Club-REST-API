@@ -17,6 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",
+    "helmet": "^4.4.1",
     "http-errors": "^1.8.0",
     "mongo-seeding": "^3.5.0",
     "mongoose": "^5.11.16"

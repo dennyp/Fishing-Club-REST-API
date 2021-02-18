@@ -1,4 +1,5 @@
 import express from 'express'
+import helmet from 'helmet'
 import { connectDatabase } from './config/mongoose.js'
 import { router } from './routes/homeRouter.js'
 
@@ -8,6 +9,8 @@ const main = async () => {
   await connectDatabase()
 
   const app = express()
+
+  app.use(helmet())
 
   app.use(express.json())
 
