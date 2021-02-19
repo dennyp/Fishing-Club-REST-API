@@ -1,7 +1,7 @@
-import { Schema, model } from 'mongoose'
+import mongoose from 'mongoose'
 import validator from 'validator'
 
-const userSchema = new Schema(
+const userSchema = new mongoose.Schema(
   {
     firstName: { type: String, required: true, trim: true },
     lastName: { type: String, required: true, trim: true },
@@ -18,4 +18,10 @@ const userSchema = new Schema(
   { timestamps: true }
 )
 
-export const User = model('user', userSchema)
+userSchema.statics.authenticate = async (email, password) => {
+  const user = await User.findOne({ email })
+  // TODO need to check the password the user is using against the database
+  return user
+}
+
+export const User = mongoose.model('user', userSchema)
