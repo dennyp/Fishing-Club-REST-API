@@ -16,4 +16,12 @@ const catchSchema = mongoose.Schema(
   { timestamps: true }
 )
 
+catchSchema.statics.getById = async (id) => {
+  try {
+    const isValidObjectId = mongoose.isValidObjectId(id)
+
+    if (isValidObjectId) return Catch.findOne({ _id: id })
+  } catch (error) {}
+}
+
 export const Catch = mongoose.model('catch', catchSchema)
