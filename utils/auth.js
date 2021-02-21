@@ -1,7 +1,7 @@
 import createError from 'http-errors'
 import jwt from 'jsonwebtoken'
 
-export const JWTAuthenticate = (req, res, next) => {
+export const verifyToken = (req, res, next) => {
   try {
     const authHeader = req.headers.authorization.split(' ')
 
