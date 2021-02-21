@@ -3,8 +3,8 @@ import mongoose from 'mongoose'
 const catchSchema = mongoose.Schema(
   {
     username: { type: String, required: true, maxlength: 20 },
-    longitude: { type: Number, required: true },
-    latitude: { type: Number, required: true },
+    longitude: { type: Number },
+    latitude: { type: Number },
     locationWater: { type: String, required: true },
     locationCity: { type: String, required: true },
     species: { type: String, required: true },
@@ -16,22 +16,16 @@ const catchSchema = mongoose.Schema(
   { timestamps: true }
 )
 
-catchSchema.statics.getAll = async () => {
-  return Catch.find({})
+catchSchema.statics.getAll = async function () {
+  return this.find({})
 }
 
-catchSchema.statics.getById = async (id) => {
+catchSchema.statics.getById = async function (id) {
   try {
     const isValidObjectId = mongoose.isValidObjectId(id)
 
-    if (isValidObjectId) return Catch.findOne({ _id: id })
+    if (isValidObjectId) return this.findOne({ _id: id })
   } catch (error) {}
-}
-
-catchSchema.methods.delete = async id => {
-  const isValidObjectId = mongoose.isValidObjectId(id)
-
-  if (isValidObjectId) return Catch.deleteOne({ _id: id })
 }
 
 export const Catch = mongoose.model('catch', catchSchema)

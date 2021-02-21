@@ -22,25 +22,23 @@ export class catchController {
     try {
       res.json(await Catch.getAll())
     } catch (error) {
-      next(error)
+      next()
     }
   }
 
   async delete(req, res, next) {
     try {
       const id = req.params.id
-      const catchObj = await Catch.getById(id)
-
-      if (!catchObj || typeof catchObj === undefined) {
+      const response = await Catch.findByIdAndDelete(id)
+      
+      if (!response) {
         next(createError(404))
         return
       }
 
-      await catchObj.delete(id)
-
       res.status(204).end()
     } catch (error) {
-      next(error)
+      next()
     }
   }
 }
