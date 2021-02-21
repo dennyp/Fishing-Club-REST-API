@@ -14,6 +14,6 @@ module.exports = names.map(name => ({
   weight: 1.9,
   length: 50,
   imageUrl: `http://image.com/${name}`,
-  timestamp: Date.now,
+  timeOfCatch: Date.now(),
   _id: getObjectId(name)
 }))

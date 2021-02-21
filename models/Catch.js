@@ -1,6 +1,6 @@
-import { Schema, model } from 'mongoose'
+import mongoose from 'mongoose'
 
-const catchSchema = Schema(
+const catchSchema = mongoose.Schema(
   {
     username: { type: String, required: true, maxlength: 20 },
     longitude: { type: Number, required: true },
@@ -11,9 +11,9 @@ const catchSchema = Schema(
     weight: { type: Number },
     length: { type: Number },
     imageUrl: { type: String },
-    timestamp: { type: Date, required: true, default: Date.now }
+    timeOfCatch: { type: Date, required: true, default: Date.now() }
   },
   { timestamps: true }
 )
 
-export const Catch = model('catch', catchSchema)
+export const Catch = mongoose.model('catch', catchSchema)
