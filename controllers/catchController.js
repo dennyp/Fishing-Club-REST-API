@@ -6,7 +6,7 @@ export class catchController {
     try {
       const id = req.params.id
       const catchObj = await Catch.getById(id)
-      
+
       if (!catchObj || typeof catchObj === undefined) {
         next(createError(404))
         return
@@ -18,9 +18,27 @@ export class catchController {
     }
   }
 
-  async findAll(req,res,next) {
+  async findAll(req, res, next) {
     try {
       res.json(await Catch.getAll())
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async delete(req, res, next) {
+    try {
+      const id = req.params.id
+      const catchObj = await Catch.getById(id)
+
+      if (!catchObj || typeof catchObj === undefined) {
+        next(createError(404))
+        return
+      }
+
+      await catchObj.delete(id)
+
+      res.status(204).end()
     } catch (error) {
       next(error)
     }

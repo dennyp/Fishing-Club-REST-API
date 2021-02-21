@@ -28,4 +28,10 @@ catchSchema.statics.getById = async (id) => {
   } catch (error) {}
 }
 
+catchSchema.methods.delete = async id => {
+  const isValidObjectId = mongoose.isValidObjectId(id)
+
+  if (isValidObjectId) return Catch.deleteOne({ _id: id })
+}
+
 export const Catch = mongoose.model('catch', catchSchema)
