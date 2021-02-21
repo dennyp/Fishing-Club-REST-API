@@ -17,4 +17,12 @@ export class catchController {
       next(createError(400))
     }
   }
+
+  async findAll(req,res,next) {
+    try {
+      res.json(await Catch.getAll())
+    } catch (error) {
+      next(error)
+    }
+  }
 }

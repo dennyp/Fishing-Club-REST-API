@@ -16,6 +16,10 @@ const catchSchema = mongoose.Schema(
   { timestamps: true }
 )
 
+catchSchema.statics.getAll = async () => {
+  return Catch.find({})
+}
+
 catchSchema.statics.getById = async (id) => {
   try {
     const isValidObjectId = mongoose.isValidObjectId(id)
