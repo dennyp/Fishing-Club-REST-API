@@ -17,7 +17,7 @@ const catchSchema = mongoose.Schema(
 )
 
 catchSchema.statics.getAll = async function () {
-  return this.find({}).populate('user')
+  return this.find({}).populate('user', 'firstName lastName email')
 }
 
 catchSchema.statics.getById = async function (id) {
