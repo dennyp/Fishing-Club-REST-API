@@ -8,6 +8,7 @@ export class AccountController {
       const user = await User.authenticate(req.body.email, req.body.password)
 
       const payload = {
+        id: user._id,
         firstname: user.firstName,
         lastname: user.lastName,
         email: user.email

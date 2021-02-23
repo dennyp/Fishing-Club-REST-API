@@ -69,7 +69,7 @@ export class catchController {
   async create(req, res, next) {
     try {
       const catchObj = new Catch({
-        user: req.body.user,
+        user: req.user,
         longitude: req.body.longitude,
         latitude: req.body.latitude,
         locationWater: req.body.locationWater,
@@ -80,7 +80,7 @@ export class catchController {
         imageUrl: req.body.imageUrl,
         timeOfCatch: req.body.timeOfCatch
       })
-    
+
       await catchObj.save()
       
       const newCatchURL = `${req.protocol}://${req.get('host')}${req.originalUrl}/${catchObj._id}`

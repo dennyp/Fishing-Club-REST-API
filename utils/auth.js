@@ -11,6 +11,7 @@ export const verifyToken = (req, res, next) => {
 
     req.token = jwt.verify(authHeader[1], process.env.TOKEN_SECRET)
     req.user = {
+      _id: req.token.id,
       firstName: req.token.firstname,
       lastname: req.token.lastname,
       email: req.token.email
