@@ -17,9 +17,24 @@ export class AccountController {
 
       res.status(201).json({ token })
     } catch (error) {
-      const err = createError(401)
+      next(createError(401))
+    }
+  }
 
-      next(err)
+  async register(req, res, next) {
+    try {
+      const user = new User({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        password: req.body.password
+      })
+
+      await user.save()
+
+      res.status(201).json(user)
+    } catch (error) {
+      next(createError(400))
     }
   }
 }
