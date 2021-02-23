@@ -80,10 +80,11 @@ export class catchController {
         imageUrl: req.body.imageUrl,
         timeOfCatch: req.body.timeOfCatch
       })
-
+    
       await catchObj.save()
-
-      res.status(201).json(catchObj)
+      
+      const newCatchURL = `${req.protocol}://${req.get('host')}${req.originalUrl}/${catchObj._id}`
+      res.location(newCatchURL).status(201).json(catchObj)
     } catch (error) {
       next()
     }
