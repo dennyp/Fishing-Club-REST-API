@@ -14,7 +14,7 @@ const main = async () => {
 
   app.use(express.json())
 
-  app.use('/', router)
+  app.use('/api/v1', router)
 
   app.use((err, req, res, next) => {
     res.status(err.status).json({
