@@ -26,6 +26,7 @@ const lastNames = [
 ]
 
 module.exports = firstNames.map((name, index) => ({
+  _id: getObjectId(`${name.toLowerCase()}@test.com`),
   firstName: name,
   lastName: lastNames[index],
   email: `${name.toLowerCase()}@test.com`,

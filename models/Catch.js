@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 const catchSchema = mongoose.Schema(
   {
-    username: { type: String, required: true, maxlength: 20 },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
     longitude: { type: Number },
     latitude: { type: Number },
     locationWater: { type: String, required: true },
@@ -11,19 +11,19 @@ const catchSchema = mongoose.Schema(
     weight: { type: Number },
     length: { type: Number },
     imageUrl: { type: String },
-    timeOfCatch: { type: Date, required: true, default: Date.now() }
+    timeOfCatch: { type: Date, default: Date.now() }
   },
   { timestamps: true }
 )
 
 catchSchema.statics.getAll = async function () {
-  return this.find({})
+  return this.find({}).populate('user')
 }
 
 catchSchema.statics.getById = async function (id) {
   const isValidObjectId = mongoose.isValidObjectId(id)
 
-  if (isValidObjectId) return this.findOne({ _id: id })
+  if (isValidObjectId) return this.findOne({ _id: id }).populate('user')
 }
 
 export const Catch = mongoose.model('catch', catchSchema)

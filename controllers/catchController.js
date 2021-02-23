@@ -48,7 +48,7 @@ export class catchController {
       const catchObj = await Catch.getById(id)
 
       await catchObj.updateOne({
-        username: req.body.username,
+        user: req.body.user,
         longitude: req.body.longitude,
         latitude: req.body.latitude,
         locationWater: req.body.locationWater,
@@ -69,7 +69,7 @@ export class catchController {
   async create(req, res, next) {
     try {
       const catchObj = new Catch({
-        username: req.body.username,
+        user: req.body.user,
         longitude: req.body.longitude,
         latitude: req.body.latitude,
         locationWater: req.body.locationWater,
