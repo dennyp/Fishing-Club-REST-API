@@ -20,7 +20,7 @@ export class catchController {
 
   async findAll(req, res, next) {
     try {
-      res.json(await Catch.getAll())
+      res.json(await Catch.getAll(req.query.pageSize, req.query.pageStartIndex))
     } catch (error) {
       next()
     }
