@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt')
+
 const { getObjectId } = require('mongo-seeding')
 
 const firstNames = [
@@ -30,5 +32,5 @@ module.exports = firstNames.map((name, index) => ({
   firstName: name,
   lastName: lastNames[index],
   email: `${name.toLowerCase()}@test.com`,
-  password: `12345678`
+  password: '12345678'
 }))

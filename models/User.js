@@ -2,6 +2,8 @@ import mongoose from 'mongoose'
 import validator from 'validator'
 import bcrypt from 'bcrypt'
 
+const SALT_ROUNDS = 10
+
 const userSchema = new mongoose.Schema(
   {
     firstName: { type: String, required: true, trim: true },
@@ -19,15 +21,22 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-userSchema.statics.authenticate = async (email, password) => {
-  const user = await User.findOne({ email })
+userSchema.pre('save', async function () {
+  this.password = await bcrypt.hash(this.password, SALT_ROUNDS)
+})
 
-  // TODO need to check the password the user is using against the database
-  // Why is bcrypt.compare always returning false? Do I need to salt and hash when creating a user?
-  // if (!user || !(await bcrypt.compare(password, user.password)))
-  //   throw new Error('Wrong username or password.')
+userSchema.statics.authenticate = async function (email, password) {
+  const user = await this.findOne({ email })
+
+  if (!user || !(await bcrypt.compare(password, user.password)))
+    throw new Error('Wrong username or password.')
 
   return user
+}
+
+userSchema.statics.create = async function (userInfo) {
+  const user = new User(userInfo)
+  return user.save()
 }
 
 export const User = mongoose.model('user', userSchema)

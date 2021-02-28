@@ -24,16 +24,14 @@ export class AccountController {
 
   async register(req, res, next) {
     try {
-      const user = new User({
+      const user = await User.create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
         password: req.body.password
       })
 
-      await user.save()
-
-      res.status(201).json(user)
+      res.status(201).json({ id: user._id })
     } catch (error) {
       next(createError(400))
     }
