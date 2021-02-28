@@ -20,7 +20,15 @@ export class catchController {
 
   async findAll(req, res, next) {
     try {
-      res.json(await Catch.getAll(req.query.pageSize, req.query.pageStartIndex))
+      const { pageSize, pageStartIndex, ...filter } = req.query
+
+      res.json(
+        await Catch.getAll(
+          pageSize,
+          pageStartIndex,
+          filter
+        )
+      )
     } catch (error) {
       next()
     }
@@ -82,8 +90,10 @@ export class catchController {
       })
 
       await catchObj.save()
-      
-      const newCatchURL = `${req.protocol}://${req.get('host')}${req.originalUrl}/${catchObj._id}`
+
+      const newCatchURL = `${req.protocol}://${req.get('host')}${
+        req.originalUrl
+      }/${catchObj._id}`
       res.location(newCatchURL).status(201).json(catchObj)
     } catch (error) {
       next()

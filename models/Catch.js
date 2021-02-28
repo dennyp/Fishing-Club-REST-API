@@ -16,11 +16,11 @@ const catchSchema = mongoose.Schema(
   { timestamps: true }
 )
 
-catchSchema.statics.getAll = async function (reqPageSize, reqStartIndex) {
+catchSchema.statics.getAll = async function (reqPageSize, reqStartIndex, filter = {}) {
   const pageSize = Math.abs(reqPageSize) || 10
   const startIndex = (Math.abs(reqStartIndex) || 1) - 1
 
-  return this.find({})
+  return this.find(filter)
     .populate('user', 'firstName lastName email')
     .skip(startIndex)
     .limit(pageSize)
