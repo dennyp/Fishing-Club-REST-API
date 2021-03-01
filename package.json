@@ -16,6 +16,7 @@
   "author": "Denny Petersson",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.21.1",
     "bcrypt": "^5.0.0",
     "express": "^4.17.1",
     "helmet": "^4.4.1",

@@ -1,5 +1,7 @@
 import { Catch } from '../models/Catch.js'
 import createError from 'http-errors'
+import { Webhook } from '../models/Webhook.js'
+import axios from 'axios'
 
 export class catchController {
   async find(req, res, next) {
@@ -22,13 +24,7 @@ export class catchController {
     try {
       const { pageSize, pageStartIndex, ...filter } = req.query
 
-      res.json(
-        await Catch.getAll(
-          pageSize,
-          pageStartIndex,
-          filter
-        )
-      )
+      res.json(await Catch.getAll(pageSize, pageStartIndex, filter))
     } catch (error) {
       next()
     }
@@ -90,6 +86,13 @@ export class catchController {
       })
 
       await catchObj.save()
+
+      // Send webhooks to notify subscribers
+      const webhooks = await Webhook.getAll()
+
+      webhooks.map((hook) => {
+        axios.post(hook.url, catchObj)
+      })
 
       const newCatchURL = `${req.protocol}://${req.get('host')}${
         req.originalUrl
