@@ -29,7 +29,7 @@ catchSchema.statics.getAll = async function (reqPageSize, reqStartIndex, filter 
 catchSchema.statics.getById = async function (id) {
   const isValidObjectId = mongoose.isValidObjectId(id)
 
-  if (isValidObjectId) return this.findOne({ _id: id }).populate('user')
+  if (isValidObjectId) return this.findOne({ _id: id }).populate('user', 'firstName lastName email')
 }
 
 export const Catch = mongoose.model('catch', catchSchema)
