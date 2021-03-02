@@ -24,7 +24,16 @@ export class catchController {
     try {
       const { pageSize, pageStartIndex, ...filter } = req.query
 
-      res.json(await Catch.getAll(pageSize, pageStartIndex, filter))
+      const catches = await Catch.getAll(pageSize, pageStartIndex, filter)
+
+      const catchesWithLinks = catches.map((catchObj) => {
+        return {
+          ...catchObj._doc,
+          _links: { self: { href: `${req.originalUrl}/${catchObj._id}` } }
+        }
+      })
+
+      res.json(catchesWithLinks)
     } catch (error) {
       next()
     }
