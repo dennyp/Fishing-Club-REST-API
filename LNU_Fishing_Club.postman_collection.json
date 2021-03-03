@@ -1,0 +1,452 @@
+{
+	"info": {
+		"_postman_id": "718b0d98-6d22-4646-b8b2-81dc7a2f214b",
+		"name": "LNU Fishing Club",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json()\r",
+									"pm.environment.set(\"NEW_USERID\", jsonData.id);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql('application/json; charset=utf-8')\r",
+									"});\r",
+									"\r",
+									"pm.test(\"New user id exists\", function () {\r",
+									"    pm.expect(pm.environment.get(\"NEW_USERID\")).to.exist;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Denny\",\r\n    \"lastName\": \"Petersson\",\r\n    \"email\": \"denny@test.com\",\r\n    \"password\": \"test12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{API_VERSION}}/register",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{API_VERSION}}",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json()\r",
+									"pm.environment.set(\"JWT\", jsonData.token)\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql('application/json; charset=utf-8')\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Token exists\", function () {\r",
+									"    pm.expect(pm.environment.get(\"JWT\")).to.exist;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"denny@test.com\",\r\n    \"password\": \"test12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{API_VERSION}}/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{API_VERSION}}",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Catches",
+			"item": [
+				{
+					"name": "GetAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql('application/json; charset=utf-8')\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{API_VERSION}}/catches",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{API_VERSION}}",
+								"catches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json()\r",
+									"pm.environment.set(\"NEW_CATCHID\", jsonData._id)\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql('application/json; charset=utf-8');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Location header is present and correct\", function () {\r",
+									"    const location = `${pm.environment.get(\"BASE_URL\")}/${pm.environment.get(\"API_VERSION\")}/catches/${pm.environment.get(\"NEW_CATCHID\")}`;\r",
+									"    pm.expect(pm.response.headers.get(\"Location\")).to.eql(location);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"longitude\": 444,\r\n        \"latitude\": 555,\r\n        \"locationWater\": \"Innaren\",\r\n        \"locationCity\": \"Växjö\",\r\n        \"species\": \"Gädda\",\r\n        \"weight\": 10,\r\n        \"length\": 111,\r\n        \"imageUrl\": \"http://image.com/created.jpg\",\r\n        \"timeOfCatch\": 1613937730654\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{API_VERSION}}/catches",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{API_VERSION}}",
+								"catches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetById",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{API_VERSION}}/catches/{{NEW_CATCHID}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{API_VERSION}}",
+								"catches",
+								"{{NEW_CATCHID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"longitude\": 321,\r\n        \"latitude\": 123,\r\n        \"locationWater\": \"UpdatedWater\",\r\n        \"locationCity\": \"UpdatedCity\",\r\n        \"species\": \"UpdatedSpecies\",\r\n        \"weight\": 12,\r\n        \"length\": 118,\r\n        \"imageUrl\": \"http://image.com/updated.jpg\",\r\n        \"timeOfCatch\": 1613937730654\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{API_VERSION}}/catches/{{NEW_CATCHID}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{API_VERSION}}",
+								"catches",
+								"{{NEW_CATCHID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{API_VERSION}}/catches/{{NEW_CATCHID}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{API_VERSION}}",
+								"catches",
+								"{{NEW_CATCHID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Webhook",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"url\": \"https://webhook.site/59ae445f-0e87-47a7-b5bd-6f206fccb409\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{API_VERSION}}/webhook/catch",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{API_VERSION}}",
+								"webhook",
+								"catch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ROOT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/{{API_VERSION}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"{{API_VERSION}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
