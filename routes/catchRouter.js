@@ -1,6 +1,7 @@
 import express from 'express'
 import { catchController } from '../controllers/catchController.js'
 import { verifyToken } from '../utils/auth.js'
+import createError from 'http-errors'
 
 export const router = express.Router()
 
@@ -20,3 +21,5 @@ router.put('/:id', verifyToken, (req, res, next) =>
 router.post('/', verifyToken, (req, res, next) =>
   controller.create(req, res, next)
 )
+
+router.patch('*', (req, res, next) => next(createError(405)))
