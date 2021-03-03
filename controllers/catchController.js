@@ -103,7 +103,7 @@ export class catchController {
         axios.post(hook.url, catchObj)
       })
 
-      const newCatchURL = `${req.protocol}://${req.get('host')}${
+      const newCatchURL = `https://${req.get('host')}${
         req.originalUrl
       }/${catchObj._id}`
       res.location(newCatchURL).status(201).json(catchObj)
